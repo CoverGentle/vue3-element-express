@@ -6,8 +6,17 @@ import { RouterView } from 'vue-router'
   <RouterView />
 </template>
 
-<style scoped>
-header {
+<style lang="scss" scoped>
+
+*{
+  margin: 0;
+  padding: 0;
+}
+html,body,#app{
+  width: 100%;
+  height: 100vh;
+}
+/* header {
   line-height: 1.5;
   max-height: 100vh;
 }
@@ -67,5 +76,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>
