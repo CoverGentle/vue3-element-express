@@ -196,7 +196,7 @@ const submitForm = async () => {
 
   .loginForm {
     .btn-primary {
-      .deep(el-form-item__content) {
+      ::v-deep .el-form-item__content {
         justify-content: center;
 
         .el-button {
