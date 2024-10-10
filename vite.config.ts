@@ -15,7 +15,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // javascriptEnabled: true,
+        javascriptEnabled: true,
         // additionalData: `@import "./src/styles/variable.scss";`,
         api: 'modern-compiler'
       }

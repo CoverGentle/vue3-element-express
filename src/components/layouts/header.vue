@@ -27,7 +27,7 @@
       <div class="avater">
         <el-dropdown>
           <span class="el-dropdown-link">
-            <el-avatar size="small"  />
+            <el-avatar size="small" />
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -35,8 +35,8 @@
               <el-dropdown-item :icon="Close" @click="removeUser">{{$t('button.logout')}}</el-dropdown-item> -->
 
               <el-dropdown-item :icon="CirclePlus">Action 3</el-dropdown-item>
-            <el-dropdown-item :icon="Check">Action 4</el-dropdown-item>
-            <el-dropdown-item :icon="CircleCheck">Action 5</el-dropdown-item>
+              <el-dropdown-item :icon="Check">Action 4</el-dropdown-item>
+              <el-dropdown-item :icon="CircleCheck">Action 5</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -46,24 +46,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref,toRefs } from 'vue'
-import { Menu as IconMenu, Message, Setting } from '@element-plus/icons-vue'
-import {
-  ArrowDown,
-  Check,
-  CircleCheck,
-  CirclePlus,
-  CirclePlusFilled,
-  UserFilled,
-  Close,
-  Fold,
-  Expand
-} from '@element-plus/icons-vue'
+import { ref } from 'vue'
+import { Check, CircleCheck, CirclePlus, Close, Fold, Expand } from '@element-plus/icons-vue'
 import githubUrl from '@/assets/images/github.png'
 // import languageUrl from '@/assets/images/language.png'
 
+const jump = () => {
+  window.open('https://github.com/CoverGentle/vue3-element-express', '_blank')
+}
 const emit = defineEmits<{
-//   (event: 'command', id: any): void
+  //   (event: 'command', id: any): void
   (event: 'handleShowMore', id: any): void
 }>()
 // 菜单栏伸缩
