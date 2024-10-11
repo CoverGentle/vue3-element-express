@@ -3,7 +3,7 @@
     <template #header>
       <div class="card-header">
         <el-button :type="isBox ? 'primary' : ''" text @click="loginBox">登录</el-button>
-        <el-button :type="isBox ? '' : 'primary'" text @click="registerBox">注册</el-button>
+        <!-- <el-button :type="isBox ? '' : 'primary'" text @click="registerBox">注册</el-button> -->
       </div>
     </template>
     <div class="login" v-if="isBox">
@@ -69,9 +69,9 @@
             placeholder="确认密码"
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item class="btn-primary">
+        <el-form-item class="btn-primary">
           <el-button type="primary">注册</el-button>
-        </el-form-item> -->
+        </el-form-item>
       </el-form>
     </div>
   </el-card>

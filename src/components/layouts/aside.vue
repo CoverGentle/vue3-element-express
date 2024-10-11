@@ -12,49 +12,90 @@
         @open="handleOpen"
         @close="handleClose"
       >
-        <el-menu-item index="/home">
-            <el-icon><House /></el-icon>
-          <span>首页</span>
+        <el-menu-item
+          class="el-menu-item"
+          v-for="item in noChildren"
+          :index="item.path"
+          :key="item.path"
+          @click="handleMuen(item)"
+        >
+          <component class="icon" :is="item.icon"></component>
+          <span>{{ item.label }}</span>
         </el-menu-item>
-        <el-sub-menu index="1">
+        <el-sub-menu v-for="item in hasChildren" :index="item.path" :key="item.path">
           <template #title>
-            <el-icon> <MapLocation/></el-icon>  <span>用户管理</span> 
+            <component class="icon" :is="item.icon"></component>
+            <span>{{ item.label }}</span>
           </template>
           <el-menu-item-group>
-            <template #title>Group 1</template>
-            <el-menu-item index="1-1">Option 1</el-menu-item>
-            <el-menu-item index="1-2">Option 2</el-menu-item>
+            <el-menu-item
+              v-for="(subItem, subIndex) in item.children"
+              :index="subItem.path"
+              :key="subItem.path"
+              @click="handleMuen(subItem)"
+            >
+              <component class="icon" :is="subItem.icon"></component>
+              <span>{{ subItem.label }}</span>
+            </el-menu-item>
           </el-menu-item-group>
-          <el-menu-item-group title="Group 2">
-            <el-menu-item index="1-3">Option 3</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="1-4">
-            <template #title>Option4</template>
-            <el-menu-item index="1-4-1">Option 4-1</el-menu-item>
-          </el-sub-menu>
         </el-sub-menu>
-        <el-menu-item index="/setting">
-            <el-icon><Setting /></el-icon> <span>系统管理</span>
-        </el-menu-item>
       </el-menu>
     </el-scrollbar>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Box,
-  House,
-  MapLocation,
-  MostlyCloudy,
-  User,
-  Setting,
-  Edit,
-} from '@element-plus/icons-vue'
-import { reactive, ref, toRefs } from 'vue'
+import { ref, computed, shallowRef } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { Menu as House, MapLocation, User, Setting, Edit } from '@element-plus/icons-vue'
+const router = useRouter()
+const route = useRoute()
+const muenList = ref([
+  {
+    name: 'home',
+    path: '/home',
+    label: '首页',
+    icon: shallowRef(House),
+    url: 'Home'
+  },
+  {
+    name: 'setting',
+    path: '/setting',
+    label: '系统设置',
+    icon: shallowRef(Setting),
+    url: 'Setting'
+  },
+  {
+    name: 'permission',
+    path: '/permission',
+    label: '权限管理',
+    icon: shallowRef(MapLocation),
+    children: [
+      {
+        name: 'user',
+        path: '/permission/user',
+        label: '用户管理',
+        icon: shallowRef(User),
+        url: 'User'
+      },
+      {
+        name: 'role',
+        path: '/permission/role',
+        label: '角色管理',
+        icon: shallowRef(Edit),
+        url: 'Role'
+      }
+    ]
+  }
+])
+
+const noChildren = computed(() => muenList.value.filter((item) => !item.children))
+const hasChildren = computed(() => muenList.value.filter((item) => item.children))
+
+const handleMuen = (item: any) => {
+  router.push(item.path)
+}
+
 const handleOpen = (key: string, keyPath: string[]) => {
   // console.log(key, keyPath)
 }
@@ -93,6 +134,11 @@ const toggleCollapse = () => {
 
   .el-menu {
     border-right: 0;
+    .icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+    }
   }
 }
 </style>
