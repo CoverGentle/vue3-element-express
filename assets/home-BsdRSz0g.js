@@ -1,0 +1,1 @@
+import{_ as e,h as c,o}from"./index-B04ERyIT.js";const n={};function r(t,s){return o(),c("div",null," 首页111111111111111111111111111111111111111111111 ")}const a=e(n,[["render",r]]);export{a as default};
