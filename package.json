@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build --mode production",
-    "build:dev": "run-p type-check \"build-only {@}\" -- -report --mode development",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
