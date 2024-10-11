@@ -1,8 +1,8 @@
 // import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import {createRouter,createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
-const routes:RouteRecordRaw[] = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     redirect: '/layout',
@@ -24,8 +24,8 @@ const routes:RouteRecordRaw[] = [
     component: () => import('@/views/layoutView.vue'),
     children: [
       {
-        path:'/layout',
-        redirect:'/home',
+        path: '/layout',
+        redirect: '/home',
         meta: {
           title: '首页'
         },
@@ -44,6 +44,20 @@ const routes:RouteRecordRaw[] = [
         },
         component: () => import('@/views/setting/setting.vue')
       },
+      {
+        path: '/permission/user',
+        meta: {
+          title: '用户管理'
+        },
+        component: () => import('@/views/permission/user.vue')
+      },
+      {
+        path: '/permission/role',
+        meta: {
+          title: '角色管理'
+        },
+        component: () => import('@/views/permission/role.vue')
+      }
     ]
   }
 
@@ -54,20 +68,20 @@ const router = createRouter({
   routes: routes
 })
 
-// router.beforeEach((to,from,next)=>{
-//   if(typeof (to.meta?.title) === 'string'){
-//     document.title = to.meta?.title
-//   }
-//   if(to.path === "/login"){
-//     next()
-//   }else{
-//     if(localStorage.getItem('token')){
-//       next()
-//     }else{
-//       next("/login")
-//     }
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (typeof (to.meta?.title) === 'string') {
+    document.title = to.meta?.title
+  }
+  if (to.path === "/login") {
+    next()
+  } else {
+    if (localStorage.getItem('token')) {
+      next()
+    } else {
+      next("/login")
+    }
+  }
+})
 
 
 export default router

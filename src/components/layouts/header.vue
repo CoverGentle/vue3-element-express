@@ -7,22 +7,11 @@
       </div>
     </div>
     <div class="header-right">
-      <!-- <div class="change-language">
-        <el-dropdown @command="handleCommand">
-          <span class="language-box">
-            <img :src="languageUrl" alt="" />
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item command="zh-cn">{{$t('language.zhcn')}}</el-dropdown-item>
-              <el-dropdown-item command="en">{{$t('language.en')}}</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div> -->
+      <div class="change-background">
+        <el-switch v-model="bgValue" :active-action-icon="View" :inactive-action-icon="Hide" />
+      </div>
       <div class="github-box" @click="jump">
-        <img :src="githubUrl" alt="" />
-        <p>GITHUB</p>
+        <img :src="githubUrl" alt="GITHUB" />
       </div>
       <div class="avater">
         <el-dropdown>
@@ -31,12 +20,13 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <!-- <el-dropdown-item :icon="UserFilled">{{$t('button.userinfo')}}</el-dropdown-item>
-              <el-dropdown-item :icon="Close" @click="removeUser">{{$t('button.logout')}}</el-dropdown-item> -->
-
-              <el-dropdown-item :icon="CirclePlus">Action 3</el-dropdown-item>
-              <el-dropdown-item :icon="Check">Action 4</el-dropdown-item>
-              <el-dropdown-item :icon="CircleCheck">Action 5</el-dropdown-item>
+              <!-- <el-dropdown-item :icon="UserFilled">{{$t('button.userinfo')}}</el-dropdown-item>-->
+              <el-dropdown-item>
+                <el-icon><User /></el-icon>个人中心</el-dropdown-item
+              >
+              <el-dropdown-item @click="removeUser"
+                ><el-icon><CloseBold /></el-icon>注销</el-dropdown-item
+              >
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -47,12 +37,28 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Check, CircleCheck, CirclePlus, Close, Fold, Expand } from '@element-plus/icons-vue'
+import {
+  Check,
+  CircleCheck,
+  CirclePlus,
+  Close,
+  User,
+  CloseBold,
+  Fold,
+  Expand,
+  View,
+  Hide
+} from '@element-plus/icons-vue'
 import githubUrl from '@/assets/images/github.png'
 // import languageUrl from '@/assets/images/language.png'
 
+const bgValue = ref(true)
 const jump = () => {
   window.open('https://github.com/CoverGentle/vue3-element-express', '_blank')
+}
+const removeUser = () => {
+  localStorage.removeItem('token')
+  window.location.reload()
 }
 const emit = defineEmits<{
   //   (event: 'command', id: any): void
