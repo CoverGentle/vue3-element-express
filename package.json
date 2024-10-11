@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" -- -report",
+    "build": "run-p type-check \"build-only {@}\" -- -report --mode production",
+    "build:dev": "run-p type-check \"build-only {@}\" -- -report --mode development",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
