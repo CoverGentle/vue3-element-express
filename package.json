@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" -- -report --mode production",
+    "build": "vue-tsc --noEmit && vite build --mode production",
     "build:dev": "run-p type-check \"build-only {@}\" -- -report --mode development",
     "preview": "vite preview",
     "test:unit": "vitest",
