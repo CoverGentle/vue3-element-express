@@ -9,7 +9,7 @@
           <Header @handleShowMore="updateShow"></Header>
         </el-header>
         <el-main>
-          <tabs />
+          <tabs :tabItem="tabItem" />
           <RouterView />
         </el-main>
       </el-container>
@@ -24,10 +24,9 @@ import Header from '@/components/layouts/header.vue'
 import tabs from '@/components/layouts/tabs.vue'
 import { ref, computed, provide, nextTick } from 'vue'
 const isShow = ref(false)
+const tabItem = ref()
 // 展示伸缩
 const updateShow = (val: any) => {
-  console.log(val.value)
-
   isShow.value = val.value
 }
 </script>
