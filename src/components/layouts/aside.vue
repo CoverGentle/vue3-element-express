@@ -6,7 +6,7 @@
     <el-scrollbar>
       <el-menu
         :collapse="isDisplay"
-        default-active="/home"
+        :default-active="activePage"
         router
         class="el-menu-vertical-demo"
         @open="handleOpen"
@@ -50,20 +50,20 @@ import { useRoute, useRouter } from 'vue-router'
 import { Menu as House, MapLocation, User, Setting, Edit } from '@element-plus/icons-vue'
 const router = useRouter()
 const route = useRoute()
+import { useTabsStore } from '@/stores/tabs'
+const tabsStore = useTabsStore()
 const muenList = ref([
   {
     name: 'home',
     path: '/home',
     label: '首页',
-    icon: shallowRef(House),
-    url: 'Home'
+    icon: shallowRef(House)
   },
   {
     name: 'setting',
     path: '/setting',
     label: '系统设置',
-    icon: shallowRef(Setting),
-    url: 'Setting'
+    icon: shallowRef(Setting)
   },
   {
     name: 'permission',
@@ -75,26 +75,33 @@ const muenList = ref([
         name: 'user',
         path: '/permission/user',
         label: '用户管理',
-        icon: shallowRef(User),
-        url: 'User'
+        icon: shallowRef(User)
       },
       {
         name: 'role',
         path: '/permission/role',
         label: '角色管理',
-        icon: shallowRef(Edit),
-        url: 'Role'
+        icon: shallowRef(Edit)
       }
     ]
   }
 ])
+
+const emit = defineEmits<{
+  (event: 'changeWidth', id: boolean): void
+}>()
 
 const noChildren = computed(() => muenList.value.filter((item) => !item.children))
 const hasChildren = computed(() => muenList.value.filter((item) => item.children))
 
 const handleMuen = (item: any) => {
   router.push(item.path)
+  tabsStore.selectMenu(item)
 }
+
+const activePage = computed(() => {
+  return route.path
+})
 
 const handleOpen = (key: string, keyPath: string[]) => {
   // console.log(key, keyPath)
@@ -106,9 +113,7 @@ const props = defineProps<{
   isDisplay: boolean
 }>()
 const isCollapse = ref(false)
-const emit = defineEmits<{
-  (event: 'changeWidth', id: boolean): void
-}>()
+
 const toggleCollapse = () => {
   isCollapse.value = !isCollapse.value
   emit('changeWidth', isCollapse.value)

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, toRaw } from "vue";
 
 /**
  * @method useTabsStore
@@ -25,16 +25,21 @@ function initTsbs() {
 export const useTabsStore = defineStore("tabs", () => {
     const state = ref(initTsbs())
 
-    // function selectMenu(val) {
-    //     if (val.name === "home") {
-    //         state.value.currentMenu = null
-    //     } else {
-    //         const index = state.value.tab.findIndex((item) => item.name === val.name)
-    //         index === -1 ? state.value.tab.push(val) : ""
-    //     }
-    // }
+    const selectMenu = (val: any) => {
+        if (val.name === "home") {
+            state.value.currentMenu = null
+        } else {
+            let index = state.value.tab.findIndex((item) => item.name === val.name)
+            index === -1 ? state.value.tab.push(val) : ""
+        }
+    }
+    const removeTab = (val: any) => {
+        let index = state.value.tab.findIndex((item) => item.path === val)
+        state.value.tab.splice(index, 1)
+    }
     return {
-        state
-        // selectMenu
+        state,
+        selectMenu,
+        removeTab
     }
 })

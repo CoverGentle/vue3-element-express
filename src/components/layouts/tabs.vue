@@ -1,44 +1,50 @@
 <template>
-  <el-tabs
-    v-model="HeaderTabsActiveName"
-    type="card"
-    @tab-click="handlePathSwicth"
-    @tab-add="addHeaderTabsList"
-    class="demo-tabs"
-    @tab-remove="removeHeaderTabsList"
-  >
-    <el-tab-pane
-      v-for="item in HeaderTabsList"
-      :key="item.name"
-      :label="item.label"
-      :name="item.path"
-      :closeable="item.name !== 'home'"
+  <div>
+    <el-tabs
+      v-model="HeaderTabsActiveName"
+      type="card"
+      @tab-click="handlePathSwicth"
+      @tab-remove="handlePathRemove"
+      class="demo-tabs"
     >
-    </el-tab-pane>
-  </el-tabs>
+      <el-tab-pane
+        v-for="item in HeaderTabsList"
+        :key="item.name"
+        :label="item.label"
+        :name="item.path"
+        :closable="item.name != 'home'"
+      >
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import type { TabPaneName } from 'element-plus'
-import { useRouter } from 'vue-router'
+import { ref, computed, toRaw } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useTabsStore } from '@/stores/tabs'
 const router = useRouter()
+const route = useRoute()
 const tabsStore = useTabsStore()
-const HeaderTabsActiveName = ref('')
+const HeaderTabsActiveName = computed(() => route.path)
 const HeaderTabsList = computed(() => tabsStore.state.tab)
-
 const handlePathSwicth = (tab: any) => {
   router.push(tab.props.name)
 }
 
-const addHeaderTabsList = (tab: any) => {
-  console.log(router)
-  // HeaderTabsList.value.push(tab)
-}
-
-const removeHeaderTabsList = (name: TabPaneName) => {
-  // HeaderTabsList.value = HeaderTabsList.value.filter((item) => item.name !== name)
+const handlePathRemove = (targetName: String) => {
+  // 当前页是要删除的页
+  if (route.path === targetName) {
+    const index = tabsStore.state.tab.findIndex((item) => item.path === targetName)
+    index === 0
+      ? router.push(tabsStore.state.tab[index + 1].path)
+      : router.push(tabsStore.state.tab[index - 1].path)
+    tabsStore.removeTab(targetName)
+  } else {
+    // 当前页不是要删除的页
+    tabsStore.removeTab(targetName)
+    return
+  }
 }
 </script>
 
